@@ -27,3 +27,9 @@ def fetch_data(subreddits, limit=100):
                 "num_comments": post.num_comments
             })
     return pd.DataFrame(posts)
+
+def load_from_csv(filepath):
+    try:
+        return pd.read_csv(filepath)
+    except FileNotFoundError:
+        return pd.DataFrame()

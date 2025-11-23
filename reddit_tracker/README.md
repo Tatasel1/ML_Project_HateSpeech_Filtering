@@ -5,9 +5,10 @@ A Python-based machine learning project to track and visualize trends on Reddit.
 ## Features
 
 - **Data Collection**: Fetches hot posts from specified subreddits using PRAW.
+- **CSV Mode**: Load data from a local CSV file for offline testing.
 - **Sentiment Analysis**: Analyzes the sentiment of post titles using NLTK VADER.
 - **Topic Modeling**: Extracts trending topics using NMF (Non-negative Matrix Factorization).
-- **Interactive Dashboard**: Visualizes data using Streamlit and Plotly.
+- **Interactive Dashboard**: Desktop GUI built with CustomTkinter and Matplotlib.
 
 ## Setup
 
@@ -28,15 +29,15 @@ A Python-based machine learning project to track and visualize trends on Reddit.
 
 ## Running the App
 
-Run the Streamlit app:
+Run the desktop application:
 
 ```bash
-streamlit run src/app.py
+python src/app.py
 ```
 
 ## Project Structure
 
-- `src/app.py`: Main dashboard application.
+- `src/app.py`: Main desktop application (CustomTkinter).
 - `src/data_loader.py`: Handles Reddit API interactions.
 - `src/preprocessor.py`: Cleans and prepares text data.
 - `src/analyzer.py`: Performs sentiment analysis and topic modeling.
