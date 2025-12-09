@@ -16,13 +16,17 @@ def concat_csv_files():
 
     combined_df.drop_duplicates(subset='id', inplace=True)
     combined_df.dropna(inplace=True)
+    
     #date conversion
+    
     combined_df['created_utc'] = pd.to_datetime(combined_df['created_utc'], unit='s')
     combined_df['hour-of-day'] = combined_df['created_utc'].dt.hour
     combined_df['day-of-week'] = combined_df['created_utc'].dt.day_name()
     combined_df['month'] = combined_df['created_utc'].dt.month_name()
+    
     # Score add field is_viral
     #if score > 50 then is_viral = 1 else 0
+    #IF ONLY /HOT CHANGE SCORE TO PERCENTILE 
 
     score = 50
     combined_df['is_viral'] = combined_df['score'].apply(lambda x: True if x > score else False)
