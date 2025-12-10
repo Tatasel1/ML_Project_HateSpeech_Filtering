@@ -13,12 +13,15 @@ print(f"Loaded {len(df)} records from cleaned_combined_posts.csv")
 print(
     f"Viral posts: {df['is_viral'].sum()}, Non-viral posts: {(df['is_viral'] == 0).sum()}")
 
-# Features: title (text), hour-of-day (numeric), day-of-week (categorical), num_comments (numeric)
+# Features: title (text), hour-of-day (numeric), day-of-week (categorical), num_comments (numeric), title_length (numeric)
 # Target: is_viral
 
 # 1. Encode day-of-week
 label_encoder = LabelEncoder()
 df['day_of_week_encoded'] = label_encoder.fit_transform(df['day-of-week'])
+
+# 1a. Extract additional title features (if not already in CSV)
+# df['punctuation_count'] = df['title'].astype(str).apply(lambda x: sum(1 for c in x if c in '!?.,;:'))
 
 # 2. TF-IDF vectorization for title
 tfidf = TfidfVectorizer(max_features=100, stop_words='english')
@@ -30,7 +33,8 @@ title_tfidf_df = pd.DataFrame(title_tfidf.toarray(), columns=[
 features_df = pd.concat([
     title_tfidf_df.reset_index(drop=True),
     df[['hour-of-day', 'day_of_week_encoded',
-        'num_comments']].reset_index(drop=True)
+        'num_comments', 'title_length']].reset_index(drop=True)
+    # Add 'punctuation_count' to the list above if uncommenting that feature
 ], axis=1)
 
 # 4. Prepare X and y

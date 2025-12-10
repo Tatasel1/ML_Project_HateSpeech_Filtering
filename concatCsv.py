@@ -26,9 +26,9 @@ def concat_csv_files():
     if combined_df['created_utc'].dt.tz is None:
         combined_df['created_utc'] = combined_df['created_utc'].dt.tz_localize('UTC')
         
-    combined_df['age_hours'] = (now - combined_df['created_utc']).dt.total_seconds() / 3600.0
-    original_count = len(combined_df)
-    combined_df = combined_df[combined_df['age_hours'] > 6]
+    #combined_df['age_hours'] = (now - combined_df['created_utc']).dt.total_seconds() / 3600.0
+    #original_count = len(combined_df)
+    #combined_df = combined_df[combined_df['age_hours'] > 6]
     
     combined_df['hour-of-day'] = combined_df['created_utc'].dt.hour
     combined_df['day-of-week'] = combined_df['created_utc'].dt.day_name()

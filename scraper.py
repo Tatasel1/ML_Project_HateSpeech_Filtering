@@ -78,7 +78,7 @@ def scrape_askreddit(subreddits, num_pages = 20 , list_type = 'hot'):
             time.sleep(random.uniform(1, 3))  # Random delay between requests
         if dataset:
             df = pd.DataFrame(dataset)
-            df.to_csv(f'posts_{sub}.csv', index=False)
+            df.to_csv(f'posts_{sub}_{list_type}.csv', index=False)
             print(f"Scraped {len(df)} posts from r/{sub}.")
             
         time.sleep(random.uniform(2, 5))  # Random delay between subreddits
@@ -87,10 +87,11 @@ def scrape_askreddit(subreddits, num_pages = 20 , list_type = 'hot'):
 if __name__ == "__main__":
     
     target_subreddits = [
-    #'funny', 'pics', 'todayilearned', 'wholesomememes',
-    #'AskReddit', 'NoStupidQuestions', 'AmItheAsshole', 'tifu','worldnews', 
+    'funny', 'pics', 'todayilearned', 'wholesomememes',
+    'AskReddit', 'NoStupidQuestions', 'AmItheAsshole', 'tifu','worldnews', 
     'technology', 'science',
     'gaming', 'movies', 'wallstreetbets', 'Music'
 ]
+    scrape_askreddit(target_subreddits, num_pages=20, list_type='hot')
     
-    scrape_askreddit(target_subreddits, num_pages=20)
+    scrape_askreddit(target_subreddits, num_pages=20, list_type='new')
