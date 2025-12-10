@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 # Load the cleaned combined posts data
-df = pd.read_csv('CSVs/cleaned_combined_posts.csv')
+df = pd.read_csv('CSV_combined/cleaned_combined_posts.csv')
 
 print(f"Loaded {len(df)} records from cleaned_combined_posts.csv")
 print(
