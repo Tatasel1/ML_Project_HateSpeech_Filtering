@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor Viralitate Reddit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; }
+        .hero-section { background: linear-gradient(135deg, #FF4500, #FF8700); color: white; padding: 50px 0; margin-bottom: 30px; }
+        .card { box-shadow: 0 4px 8px rgba(0,0,0,0.1); border: none; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Reddit Virality Predictor 🚀</h1>
+            <p class="lead">Un proiect de Machine Learning care prezice succesul postărilor.</p>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card p-4 mb-4">
+                    <h3>Despre Proiect</h3>
+                    <p>Acest instrument folosește Inteligența Artificială pentru a analiza dacă o postare pe Reddit are șanse să ajungă în "Trending".</p>
+                    <hr>
+                    <h5>Cum funcționează?</h5>
+                    <ul>
+                        <li><strong>Scraping:</strong> Am colectat mii de postări de pe Reddit (Hot & New).</li>
+                        <li><strong>Procesare:</strong> Am analizat lungimea titlului, ora postării și emoția textului.</li>
+                        <li><strong>Modelare:</strong> Un algoritm <em>Logistic Regression</em> clasifică postarea ca fiind "Virală" sau "Normală".</li>
+                    </ul>
+                    <div class="alert alert-info">
+                        <strong>Acuratețe Model:</strong> ~80% (folosind Metadata + Sentiment)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-4">
+                    <h3 class="mb-3">Testează Modelul</h3>
+                    
+                    <form action="/predict" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Titlul Postării</label>
+                            <input type="text" name="title" class="form-control" placeholder="Ex: I found a secret door in my house..." required value="{{ original_title }}">
+                            <div class="form-text">Scrie un titlu în engleză pentru cele mai bune rezultate.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ora Postării (0-23)</label>
+                            <input type="number" name="hour" class="form-control" min="0" max="23" value="14" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Ziua Săptămânii</label>
+                            <select name="day" class="form-select">
+                                <option value="Monday">Luni (Monday)</option>
+                                <option value="Tuesday">Marți (Tuesday)</option>
+                                <option value="Wednesday">Miercuri (Wednesday)</option>
+                                <option value="Thursday">Joi (Thursday)</option>
+                                <option value="Friday">Vineri (Friday)</option>
+                                <option value="Saturday">Sâmbătă (Saturday)</option>
+                                <option value="Sunday">Duminică (Sunday)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">🔮 Calculează Șansele</button>
+                    </form>
+
+                    {% if prediction_text %}
+                    <div class="mt-4 alert alert-{{ alert_type }} text-center">
+                        <h3>{{ prediction_text }}</h3>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-3 text-muted">
+        <small>Dezvoltat cu Flask & Scikit-Learn</small>
+    </footer>
+
+</body>
+</html>
