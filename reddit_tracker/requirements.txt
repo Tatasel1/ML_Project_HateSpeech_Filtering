@@ -1,9 +1,0 @@
-praw
-pandas
-numpy
-nltk
-scikit-learn
-customtkinter
-matplotlib
-python-dotenv
-packaging
