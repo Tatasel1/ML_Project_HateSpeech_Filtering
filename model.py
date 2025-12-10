@@ -24,7 +24,7 @@ df['day_of_week_encoded'] = label_encoder.fit_transform(df['day-of-week'])
 # df['punctuation_count'] = df['title'].astype(str).apply(lambda x: sum(1 for c in x if c in '!?.,;:'))
 
 # 2. TF-IDF vectorization for title
-tfidf = TfidfVectorizer(max_features=100, stop_words='english')
+tfidf = TfidfVectorizer(max_features = 2000, stop_words='english')
 title_tfidf = tfidf.fit_transform(df['title'].astype(str))
 title_tfidf_df = pd.DataFrame(title_tfidf.toarray(), columns=[
                               f'title_tfidf_{i}' for i in range(title_tfidf.shape[1])])
@@ -32,8 +32,7 @@ title_tfidf_df = pd.DataFrame(title_tfidf.toarray(), columns=[
 # 3. Combine features
 features_df = pd.concat([
     title_tfidf_df.reset_index(drop=True),
-    df[['hour-of-day', 'day_of_week_encoded',
-        'num_comments', 'title_length']].reset_index(drop=True)
+    df[['hour-of-day', 'day_of_week_encoded', 'title_length']].reset_index(drop=True)
     # Add 'punctuation_count' to the list above if uncommenting that feature
 ], axis=1)
 
