@@ -1,1 +1,1 @@
-# ML_Project_HateSpeech_Filtering
+# ML_Project_Reddit_Predictor
