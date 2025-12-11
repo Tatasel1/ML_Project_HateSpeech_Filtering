@@ -22,6 +22,10 @@ except FileNotFoundError:
 def home():
     return render_template('index.html')
 
+@app.route('/analysis')
+def analysis():
+    return render_template('plots.html')
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if not model:
@@ -64,15 +68,15 @@ def predict():
         confidence = "N/A"
         
     if confidence_val >= 65:
-        result_message = f"🔥 VIRAL! (Șanse: {confidence})"
+        result_message = f"VIRAL! (Chance: {confidence})"
         alert_type = "success" 
         
     elif confidence_val >=40:
-        result_message = f"⚠️ Potențial Viral (Șanse: {confidence})"
+        result_message = f"Potentially Viral (Chance: {confidence})"
         alert_type = "warning"  
         
     else:
-        result_message = f"❄️ Nu e Viral (Șanse: {confidence})"
+        result_message = f"Not Viral (Chance: {confidence})"
         alert_type = "secondary" 
         
     return render_template('index.html', prediction=result_message, alert_type=alert_type, original_title=title, original_hour=hour_of_day, original_day=day_of_week)

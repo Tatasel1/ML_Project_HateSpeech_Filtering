@@ -21,8 +21,7 @@ def concat_csv_files():
 
     # date conversion
 
-    combined_df['created_utc'] = pd.to_datetime(
-        combined_df['created_utc'], unit='s')
+    combined_df['created_utc'] = pd.to_datetime(combined_df['created_utc'], unit='s')
 
     now = pd.Timestamp.now(tz='UTC')
 

@@ -1,18 +1,25 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predictor Viralitate Reddit</title>
+    <title>Reddit Virality Predictor</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="nav-logo">Reddit AI</a>
+            
+            <a href="/analysis" class="nav-link">View Charts & Analysis</a>
+        </div>
+    </nav>
     <div class="hero-section">
         <div class="container">
-            <h1>Reddit Virality Predictor 🚀</h1>
-            <p>Un proiect de Machine Learning care prezice succesul postărilor.</p>
+            <h1>Reddit Virality Predictor</h1>
+            <p>A Machine Learning project that predicts post success.</p>
         </div>
     </div>
 
@@ -21,52 +28,52 @@
             
             <div class="col">
                 <div class="card">
-                    <h3>Despre Proiect</h3>
-                    <p>Acest instrument folosește Inteligența Artificială pentru a analiza dacă o postare pe Reddit are șanse să ajungă în "Trending".</p>
+                    <h3>About the Project</h3>
+                    <p>This tool uses Artificial Intelligence to analyze if a Reddit post has a high chance of reaching "Trending".</p>
                     
-                    <h5 style="margin-top: 20px; font-weight: 600;">Cum funcționează?</h5>
+                    <h5 style="margin-top: 20px; font-weight: 600;">How does it work?</h5>
                     <ul>
-                        <li><strong>Scraping:</strong> Am colectat mii de postări de pe Reddit (Hot & New).</li>
-                        <li><strong>Procesare:</strong> Am analizat lungimea titlului, ora postării și emoția textului.</li>
-                        <li><strong>Modelare:</strong> Un algoritm <em>Logistic Regression</em> clasifică postarea ca fiind "Virală" sau "Normală".</li>
+                        <li><strong>Scraping:</strong> We collected thousands of posts from Reddit (Hot & New).</li>
+                        <li><strong>Processing:</strong> We analyzed title length, posting time, and text sentiment.</li>
+                        <li><strong>Modeling:</strong> A <em>Logistic Regression</em> model classifies the post as "Viral" or "Normal".</li>
                     </ul>
 
                     <div class="info-box">
-                        <strong>Acuratețe Model:</strong> ~66% (Optimizat pentru Recall)
+                        <strong>Model Accuracy:</strong> ~66% (Optimized for Recall)
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card">
-                    <h3>Testează Modelul</h3>
+                    <h3>Test the Model</h3>
                     
                     <form action="/predict" method="POST">
                         <div class="form-group">
-                            <label class="form-label">Titlul Postării</label>
+                            <label class="form-label">Post Title</label>
                             <input type="text" name="title" class="form-control" placeholder="Ex: I found a secret door..." required value="{{ original_title|default('') }}">
-                            <div class="helper-text">Scrie un titlu în engleză.</div>
+                            <div class="helper-text">Write a title in English.</div>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Ora Postării (0-23)</label>
+                            <label class="form-label">Posting Hour (0-23)</label>
                             <input type="number" name="hour_of_day" class="form-control" min="0" max="23" value="{{ original_hour if original_hour is defined else 14 }}" required>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">Ziua Săptămânii</label>
+                            <label class="form-label">Day of Week</label>
                             <select name="day_of_week" class="form-select">
-                                <option value="Monday" {% if original_day == 'Monday' %}selected{% endif %}>Luni (Monday)</option>
-                                <option value="Tuesday" {% if original_day == 'Tuesday' %}selected{% endif %}>Marți (Tuesday)</option>
-                                <option value="Wednesday" {% if original_day == 'Wednesday' %}selected{% endif %}>Miercuri (Wednesday)</option>
-                                <option value="Thursday" {% if original_day == 'Thursday' %}selected{% endif %}>Joi (Thursday)</option>
-                                <option value="Friday" {% if original_day == 'Friday' %}selected{% endif %}>Vineri (Friday)</option>
-                                <option value="Saturday" {% if original_day == 'Saturday' %}selected{% endif %}>Sâmbătă (Saturday)</option>
-                                <option value="Sunday" {% if original_day == 'Sunday' %}selected{% endif %}>Duminică (Sunday)</option>
+                                <option value="Monday" {% if original_day == 'Monday' %}selected{% endif %}>Monday</option>
+                                <option value="Tuesday" {% if original_day == 'Tuesday' %}selected{% endif %}>Tuesday</option>
+                                <option value="Wednesday" {% if original_day == 'Wednesday' %}selected{% endif %}>Wednesday</option>
+                                <option value="Thursday" {% if original_day == 'Thursday' %}selected{% endif %}>Thursday</option>
+                                <option value="Friday" {% if original_day == 'Friday' %}selected{% endif %}>Friday</option>
+                                <option value="Saturday" {% if original_day == 'Saturday' %}selected{% endif %}>Saturday</option>
+                                <option value="Sunday" {% if original_day == 'Sunday' %}selected{% endif %}>Sunday</option>
                             </select>
                         </div>
 
-                        <button type="submit" class="btn">🔮 Calculează Șansele</button>
+                        <button type="submit" class="btn">Calculate Chances</button>
                     </form>
 
                     {% if prediction %}
@@ -81,7 +88,7 @@
     </div>
 
     <footer>
-        <small>Dezvoltat cu Flask & Scikit-Learn</small>
+        <small>Developed with Flask & Scikit-Learn</small>
     </footer>
 
 </body>
