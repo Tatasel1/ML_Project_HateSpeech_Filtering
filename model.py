@@ -5,10 +5,10 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import joblib
 
 # Load the cleaned combined posts data
 df = pd.read_csv('CSV_combined/cleaned_combined_posts.csv')
-
 print(f"Loaded {len(df)} records from cleaned_combined_posts.csv")
 print(
     f"Viral posts: {df['is_viral'].sum()}, Non-viral posts: {(df['is_viral'] == 0).sum()}")
@@ -26,8 +26,7 @@ df['day_of_week_encoded'] = label_encoder.fit_transform(df['day-of-week'])
 # 2. TF-IDF vectorization for title
 tfidf = TfidfVectorizer(max_features = 2000, stop_words='english')
 title_tfidf = tfidf.fit_transform(df['title'].astype(str))
-title_tfidf_df = pd.DataFrame(title_tfidf.toarray(), columns=[
-                              f'title_tfidf_{i}' for i in range(title_tfidf.shape[1])])
+title_tfidf_df = pd.DataFrame(title_tfidf.toarray(), columns=[f'title_tfidf_{i}' for i in range(title_tfidf.shape[1])])
 
 # 3. Combine features
 features_df = pd.concat([
@@ -55,6 +54,9 @@ X_test_scaled = scaler.transform(X_test)
 # 7. Train Logistic Regression model
 model = LogisticRegression(max_iter=1000, random_state=42)
 model.fit(X_train_scaled, y_train)
+joblib.dump(model, 'logistic_regression_model.pkl')
+joblib.dump(tfidf, 'tfidf_vectorizer.pkl')
+joblib.dump(scaler, 'scaler.pkl')
 
 print("\nModel trained successfully!")
 
@@ -65,7 +67,6 @@ y_pred = model.predict(X_test_scaled)
 accuracy = accuracy_score(y_test, y_pred)
 print(f"\nAccuracy: {accuracy:.4f}")
 print("\nClassification Report:")
-print(classification_report(y_test, y_pred,
-      target_names=['Non-Viral', 'Viral']))
+print(classification_report(y_test, y_pred,target_names=['Non-Viral', 'Viral']))
 print("\nConfusion Matrix:")
 print(confusion_matrix(y_test, y_pred))

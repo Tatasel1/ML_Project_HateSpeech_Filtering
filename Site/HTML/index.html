@@ -44,38 +44,38 @@
                     <h3 class="mb-3">Testează Modelul</h3>
                     
                     <form action="/predict" method="POST">
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Titlul Postării</label>
-                            <input type="text" name="title" class="form-control" placeholder="Ex: I found a secret door in my house..." required value="{{ original_title }}">
-                            <div class="form-text">Scrie un titlu în engleză pentru cele mai bune rezultate.</div>
-                        </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Titlul Postării</label>
+        <input type="text" name="title" class="form-control" placeholder="Ex: I found a secret door..." required value="{{ original_title|default('') }}">
+        <div class="form-text">Scrie un titlu în engleză.</div>
+    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Ora Postării (0-23)</label>
-                            <input type="number" name="hour" class="form-control" min="0" max="23" value="14" required>
-                        </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Ora Postării (0-23)</label>
+        <input type="number" name="hour_of_day" class="form-control" min="0" max="23" value="{{ original_hour if original_hour is defined else 14 }}" required>
+    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Ziua Săptămânii</label>
-                            <select name="day" class="form-select">
-                                <option value="Monday">Luni (Monday)</option>
-                                <option value="Tuesday">Marți (Tuesday)</option>
-                                <option value="Wednesday">Miercuri (Wednesday)</option>
-                                <option value="Thursday">Joi (Thursday)</option>
-                                <option value="Friday">Vineri (Friday)</option>
-                                <option value="Saturday">Sâmbătă (Saturday)</option>
-                                <option value="Sunday">Duminică (Sunday)</option>
-                            </select>
-                        </div>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Ziua Săptămânii</label>
+        <select name="day_of_week" class="form-select">
+            <option value="Monday" {% if original_day == 'Monday' %}selected{% endif %}>Luni (Monday)</option>
+            <option value="Tuesday" {% if original_day == 'Tuesday' %}selected{% endif %}>Marți (Tuesday)</option>
+            <option value="Wednesday" {% if original_day == 'Wednesday' %}selected{% endif %}>Miercuri (Wednesday)</option>
+            <option value="Thursday" {% if original_day == 'Thursday' %}selected{% endif %}>Joi (Thursday)</option>
+            <option value="Friday" {% if original_day == 'Friday' %}selected{% endif %}>Vineri (Friday)</option>
+            <option value="Saturday" {% if original_day == 'Saturday' %}selected{% endif %}>Sâmbătă (Saturday)</option>
+            <option value="Sunday" {% if original_day == 'Sunday' %}selected{% endif %}>Duminică (Sunday)</option>
+        </select>
+    </div>
 
-                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">🔮 Calculează Șansele</button>
-                    </form>
+    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">🔮 Calculează Șansele</button>
+</form>
 
-                    {% if prediction_text %}
-                    <div class="mt-4 alert alert-{{ alert_type }} text-center">
-                        <h3>{{ prediction_text }}</h3>
-                    </div>
-                    {% endif %}
+{% if prediction %}
+<div class="mt-4 alert alert-{{ alert_type }} text-center shadow-sm">
+    <h3 class="mb-0">{{ prediction }}</h3>
+</div>
+{% endif %}
 
                 </div>
             </div>

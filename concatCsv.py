@@ -43,9 +43,9 @@ def concat_csv_files():
     # if score > 50 then is_viral = 1 else 0
     # IF ONLY /HOT CHANGE SCORE TO PERCENTILE
 
-    score = 50
+    viral_threshold = combined_df['score'].quantile(0.75)
     combined_df['is_viral'] = combined_df['score'].apply(
-        lambda x: 1 if x > score else 0)
+        lambda x: 1 if x >= viral_threshold else 0)
 
     combined_df.drop(columns=['domain', 'is_self',
                      'created_utc'], inplace=True)
