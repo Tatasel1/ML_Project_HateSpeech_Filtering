@@ -67,7 +67,7 @@ def predict():
         result_message = f"🔥 VIRAL! (Șanse: {confidence})"
         alert_type = "success" 
         
-    elif confidence_val >=45:
+    elif confidence_val >=40:
         result_message = f"⚠️ Potențial Viral (Șanse: {confidence})"
         alert_type = "warning"  
         
@@ -75,12 +75,10 @@ def predict():
         result_message = f"❄️ Nu e Viral (Șanse: {confidence})"
         alert_type = "secondary" 
         
-    return render_template('index.html', 
-                           prediction=result_message, 
-                           alert_type=alert_type, 
-                           original_title=title,
-                           original_hour=hour_of_day,
-                           original_day=day_of_week)
+    return render_template('index.html', prediction=result_message, alert_type=alert_type, original_title=title, original_hour=hour_of_day, original_day=day_of_week)
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
+    
+    #SI RANDOM FOREST

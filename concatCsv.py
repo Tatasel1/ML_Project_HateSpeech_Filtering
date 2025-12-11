@@ -29,9 +29,9 @@ def concat_csv_files():
     if combined_df['created_utc'].dt.tz is None:
         combined_df['created_utc'] = combined_df['created_utc'].dt.tz_localize('UTC')
 
-    #combined_df['age_hours'] = (now - combined_df['created_utc']).dt.total_seconds() / 3600.0
-    #original_count = len(combined_df)
-    #combined_df = combined_df[combined_df['age_hours'] > 6]
+    combined_df['age_hours'] = (now - combined_df['created_utc']).dt.total_seconds() / 3600.0
+    original_count = len(combined_df)
+    combined_df = combined_df[combined_df['age_hours'] > 6]
 
     combined_df['hour-of-day'] = combined_df['created_utc'].dt.hour
     combined_df['day-of-week'] = combined_df['created_utc'].dt.day_name()
@@ -46,7 +46,10 @@ def concat_csv_files():
     combined_df['is_viral'] = combined_df['score'].apply(
         lambda x: 1 if x >= viral_threshold else 0)
 
-    combined_df.drop(columns=['domain', 'is_self','created_utc'], inplace=True)
+    columns_to_drop = ['domain', 'is_self', 'created_utc', 'upvote_ratio', 'num_comments', 'score','id', 'age_hours']
+    existing_columns = [col for col in columns_to_drop if col in combined_df.columns]
+    combined_df.drop(columns=existing_columns, inplace=True)
+    
     combined_df.to_csv('CSV_combined/cleaned_combined_posts.csv', index=False)
     print(
         f"Cleaned data saved to 'CSV_combined/cleaned_combined_posts.csv' with {len(combined_df)} records after cleaning.")
