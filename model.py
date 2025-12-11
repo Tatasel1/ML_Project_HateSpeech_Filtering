@@ -32,7 +32,6 @@ title_tfidf_df = pd.DataFrame(title_tfidf.toarray(), columns=[f'title_tfidf_{i}'
 features_df = pd.concat([
     title_tfidf_df.reset_index(drop=True),
     df[['hour-of-day', 'day_of_week_encoded', 'title_length']].reset_index(drop=True)
-    # Add 'punctuation_count' to the list above if uncommenting that feature
 ], axis=1)
 
 # 4. Prepare X and y

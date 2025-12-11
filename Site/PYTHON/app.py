@@ -5,7 +5,7 @@ import joblib
 
 load_dotenv()
 
-app = Flask(__name__, template_folder='../HTML')
+app = Flask(__name__, template_folder='../HTML', static_folder='../CSS', static_url_path='/CSS')
 
 try:
     model = joblib.load('logistic_regression_model.pkl')
