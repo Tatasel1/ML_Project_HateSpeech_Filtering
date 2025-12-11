@@ -51,20 +51,25 @@ def predict():
     input_df = pd.concat([title_features, input_df], axis=1)
     input_df_scaled = scaler.transform(input_df)
     
+    viral_chance_percent = 0
+    
     if hasattr(model, "predict_proba"):
         probs = model.predict_proba(input_df_scaled)[0]
         
-        confidence_val = max(probs) * 100
+        confidence_val = probs[1] * 100
         confidence = f"{confidence_val:.1f}%"
     else:
+        confidence_val = 0
         confidence = "N/A"
         
-        
-    prediction = model.predict(input_df_scaled)[0]
-    
-    if prediction == 1:
+    if confidence_val >= 65:
         result_message = f"🔥 VIRAL! (Șanse: {confidence})"
         alert_type = "success" 
+        
+    elif confidence_val >= 45:
+        result_message = f"⚠️ Potențial Viral (Șanse: {confidence})"
+        alert_type = "warning"  
+        
     else:
         result_message = f"❄️ Nu e Viral (Șanse: {confidence})"
         alert_type = "secondary" 
@@ -73,7 +78,7 @@ def predict():
                            prediction=result_message, 
                            alert_type=alert_type, 
                            original_title=title,
-                           original_hour=hour_of_day,  # <--- LINIE NOUĂ
+                           original_hour=hour_of_day,
                            original_day=day_of_week)
 
 if __name__ == '__main__':

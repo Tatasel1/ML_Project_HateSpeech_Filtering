@@ -52,8 +52,9 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # 7. Train Logistic Regression model
-model = LogisticRegression(max_iter=1000, random_state=42)
+model = LogisticRegression(max_iter=1000, random_state=42, class_weight='balanced')
 model.fit(X_train_scaled, y_train)
+
 joblib.dump(model, 'logistic_regression_model.pkl')
 joblib.dump(tfidf, 'tfidf_vectorizer.pkl')
 joblib.dump(scaler, 'scaler.pkl')
