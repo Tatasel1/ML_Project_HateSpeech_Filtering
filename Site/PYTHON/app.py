@@ -66,7 +66,7 @@ def predict():
         result_message = f"🔥 VIRAL! (Șanse: {confidence})"
         alert_type = "success" 
         
-    elif confidence_val >= 45:
+    elif confidence_val >=45:
         result_message = f"⚠️ Potențial Viral (Șanse: {confidence})"
         alert_type = "warning"  
         
