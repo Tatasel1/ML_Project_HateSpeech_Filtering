@@ -67,7 +67,7 @@ def predict():
         confidence_val = 0
         confidence = "N/A"
         
-    if confidence_val >= 65:
+    if confidence_val >= 60:
         result_message = f"VIRAL! (Chance: {confidence})"
         alert_type = "success" 
         
