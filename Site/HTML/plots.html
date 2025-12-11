@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Data Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='plots.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="nav-logo">Back to Predictor</a>
+            <span class="nav-title">Data Analysis Report</span>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <h1>The Data Story</h1>
+            <p>From collection (Raw Data) to prediction (Machine Learning).</p>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="section-divider">
+            <h2 class="section-title">1. Extracted Data (Raw Data)</h2>
+            <p class="section-subtitle">An overview of the raw data collected from Reddit before any processing.</p>
+        </div>
+
+        <div class="plots-grid">
+            
+            <div class="plot-card full-width">
+                <h3>Data Source (Subreddits)</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/posts-sub.png') }}" alt="Subreddit Distribution">
+                </div>
+                <p class="description">Volume of posts collected from each specific category/subreddit.</p>
+            </div>
+
+            <div class="plot-card">
+                <h3>Temporal Analysis (Hour)</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/posts-hour.png') }}" alt="Posts by Hour">
+                </div>
+                <p class="description">Distribution of posting activity based on the time of day.</p>
+            </div>
+
+            <div class="plot-card">
+                <h3>Temporal Analysis (Day)</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/posts-day.png') }}" alt="Posts by Day">
+                </div>
+                <p class="description">Distribution of posting activity across days of the week.</p>
+            </div>
+
+            <div class="section-divider" style="margin-top: 60px;">
+                <h2 class="section-title">2. Preprocessed Data & Features</h2>
+                <p class="section-subtitle">Insights derived after cleaning and analyzing feature relationships.</p>
+            </div>
+
+            <div class="plot-card full-width">
+                <h3>Virality Distribution (Target)</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/image.png') }}" alt="Score Distribution">
+                </div>
+                <p class="description">Most posts have low scores (Long Tail distribution). We defined "Viral" as the top 25% of posts.</p>
+            </div>
+
+            <div class="plot-card">
+                <h3>Virality by Title Length</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/title-length.png') }}" alt="Title Length Analysis">
+                </div>
+                <p class="description">Analyzing how the character count of a title correlates with the likelihood of a post becoming viral.</p>
+            </div>
+
+
+            <div class="plot-card">
+                <h3>Virality by Hour of Day</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/virality-hour.png') }}" alt="Virality by Hour">
+                </div>
+                <p class="description">The relationship between the posting hour and the probability of reaching viral status.</p>
+            </div>
+
+            <div class="plot-card">
+                <h3>Virality by Day of Week</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/virality-week.png') }}" alt="Virality by Week">
+                </div>
+                <p class="description">Success rates of posts compared across different days of the week.</p>
+            </div>
+
+            <div class="plot-card">
+                <h3>Virality by Age vs Subreddit</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/age.png') }}" alt="Age Analysis">
+                </div>
+                <p class="description">How the lifespan of a post correlates with its score within specific subreddits.</p>
+            </div>
+
+
+            <div class="plot-card">
+                <h3>Virality by Title Length vs Subreddit</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/title-length-sub.png') }}" alt="Title Subreddit Analysis">
+                </div>
+                <p class="description">A granular look at optimal title lengths specific to each community context.</p>
+            </div>
+
+            <div class="plot-card">
+                <h3>Virality Distribution per Subreddit</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/viral-sub.png') }}" alt="Viral Dist Subreddit">
+                </div>
+                <p class="description">Comparison of viral vs. non-viral ratios across different subreddits.</p>
+            </div>
+        </div>
+
+
+        <div class="section-divider" style="margin-top: 60px;">
+            <h2 class="section-title">3. Normalized & Standardized Data</h2>
+            <p class="section-subtitle">Data passed through <code>StandardScaler</code> and <code>TF-IDF</code>. Here is what the model learned.</p>
+        </div>
+
+        <div class="plots-grid">
+            
+            <div class="plot-card full-width">
+                <h3>Correlation Matrix (Heatmap)</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/corr-matr.png') }}" alt="Correlation">
+                </div>
+                <p class="description">Relationships between numerical variables after processing, highlighting feature dependencies.</p>
+            </div>
+
+            <div class="plot-card full-width">
+                <h3>Confusion Matrix</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/conf-matr.png') }}" alt="Confusion Matrix">
+                </div>
+                <p class="description">Performance on test data: True Positives (Viral correctly identified) vs. False Positives and Negatives.</p>
+            </div>
+
+             <div class="plot-card full-width">
+                <h3>Results of Model</h3>
+                <div class="img-container">
+                    <img src="{{ url_for('static', filename='images/report.png') }}" alt="Confusion Matrix">
+                </div>
+                <p class="description">Great Accuracy and Recall for both types.</p>
+            </div>
+
+            </div>
+    </div>
+
+    <footer>
+        <small>Analysis generated with Matplotlib & Seaborn</small>
+    </footer>
+
+</body>
+</html>

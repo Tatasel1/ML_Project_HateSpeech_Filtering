@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Virality Predictor</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="/" class="nav-logo">Reddit AI</a>
+            
+            <a href="/analysis" class="nav-link">View Charts & Analysis</a>
+        </div>
+    </nav>
+    <div class="hero-section">
+        <div class="container">
+            <h1>Reddit Virality Predictor</h1>
+            <p>A Machine Learning project that predicts post success.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="grid-layout">
+            
+            <div class="col">
+                <div class="card">
+                    <h3>About the Project</h3>
+                    <p>This tool uses Artificial Intelligence to analyze if a Reddit post has a high chance of reaching "Trending".</p>
+                    
+                    <h5 style="margin-top: 20px; font-weight: 600;">How does it work?</h5>
+                    <ul>
+                        <li><strong>Scraping:</strong> We collected thousands of posts from Reddit (Hot & New).</li>
+                        <li><strong>Processing:</strong> We analyzed title length, posting time, and text sentiment.</li>
+                        <li><strong>Modeling:</strong> A <em>Logistic Regression</em> model classifies the post as "Viral" or "Normal".</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <strong>Model Accuracy:</strong> ~66% (Optimized for Recall)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <h3>Test the Model</h3>
+                    
+                    <form action="/predict" method="POST">
+                        <div class="form-group">
+                            <label class="form-label">Post Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Ex: I found a secret door..." required value="{{ original_title|default('') }}">
+                            <div class="helper-text">Write a title in English.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Posting Hour (0-23)</label>
+                            <input type="number" name="hour_of_day" class="form-control" min="0" max="23" value="{{ original_hour if original_hour is defined else 14 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Day of Week</label>
+                            <select name="day_of_week" class="form-select">
+                                <option value="Monday" {% if original_day == 'Monday' %}selected{% endif %}>Monday</option>
+                                <option value="Tuesday" {% if original_day == 'Tuesday' %}selected{% endif %}>Tuesday</option>
+                                <option value="Wednesday" {% if original_day == 'Wednesday' %}selected{% endif %}>Wednesday</option>
+                                <option value="Thursday" {% if original_day == 'Thursday' %}selected{% endif %}>Thursday</option>
+                                <option value="Friday" {% if original_day == 'Friday' %}selected{% endif %}>Friday</option>
+                                <option value="Saturday" {% if original_day == 'Saturday' %}selected{% endif %}>Saturday</option>
+                                <option value="Sunday" {% if original_day == 'Sunday' %}selected{% endif %}>Sunday</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn">Calculate Chances</button>
+                    </form>
+
+                    {% if prediction %}
+                        <div class="result-box alert-{{ alert_type }}">
+                            {{ prediction }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <small>Developed with Flask & Scikit-Learn</small>
+    </footer>
+
+</body>
+</html>
