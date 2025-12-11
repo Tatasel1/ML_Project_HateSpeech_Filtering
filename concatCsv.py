@@ -27,8 +27,7 @@ def concat_csv_files():
     now = pd.Timestamp.now(tz='UTC')
 
     if combined_df['created_utc'].dt.tz is None:
-        combined_df['created_utc'] = combined_df['created_utc'].dt.tz_localize(
-            'UTC')
+        combined_df['created_utc'] = combined_df['created_utc'].dt.tz_localize('UTC')
 
     #combined_df['age_hours'] = (now - combined_df['created_utc']).dt.total_seconds() / 3600.0
     #original_count = len(combined_df)
@@ -47,8 +46,7 @@ def concat_csv_files():
     combined_df['is_viral'] = combined_df['score'].apply(
         lambda x: 1 if x >= viral_threshold else 0)
 
-    combined_df.drop(columns=['domain', 'is_self',
-                     'created_utc'], inplace=True)
+    combined_df.drop(columns=['domain', 'is_self','created_utc'], inplace=True)
     combined_df.to_csv('CSV_combined/cleaned_combined_posts.csv', index=False)
     print(
         f"Cleaned data saved to 'CSV_combined/cleaned_combined_posts.csv' with {len(combined_df)} records after cleaning.")

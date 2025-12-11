@@ -12,6 +12,7 @@ try:
     tdidf = joblib.load('tfidf_vectorizer.pkl')
     scaler = joblib.load('scaler.pkl')
     print("Model încărcat cu succes!")
+    
 except FileNotFoundError:
     model = None
     print("EROARE: Nu am găsit 'logistic_regression_model.pkl'. Asigură-te că este în același folder.")
