@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictor Viralitate Reddit</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1>Reddit Virality Predictor 🚀</h1>
+            <p>Un proiect de Machine Learning care prezice succesul postărilor.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="grid-layout">
+            
+            <div class="col">
+                <div class="card">
+                    <h3>Despre Proiect</h3>
+                    <p>Acest instrument folosește Inteligența Artificială pentru a analiza dacă o postare pe Reddit are șanse să ajungă în "Trending".</p>
+                    
+                    <h5 style="margin-top: 20px; font-weight: 600;">Cum funcționează?</h5>
+                    <ul>
+                        <li><strong>Scraping:</strong> Am colectat mii de postări de pe Reddit (Hot & New).</li>
+                        <li><strong>Procesare:</strong> Am analizat lungimea titlului, ora postării și emoția textului.</li>
+                        <li><strong>Modelare:</strong> Un algoritm <em>Logistic Regression</em> clasifică postarea ca fiind "Virală" sau "Normală".</li>
+                    </ul>
+
+                    <div class="info-box">
+                        <strong>Acuratețe Model:</strong> ~66% (Optimizat pentru Recall)
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <h3>Testează Modelul</h3>
+                    
+                    <form action="/predict" method="POST">
+                        <div class="form-group">
+                            <label class="form-label">Titlul Postării</label>
+                            <input type="text" name="title" class="form-control" placeholder="Ex: I found a secret door..." required value="{{ original_title|default('') }}">
+                            <div class="helper-text">Scrie un titlu în engleză.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Ora Postării (0-23)</label>
+                            <input type="number" name="hour_of_day" class="form-control" min="0" max="23" value="{{ original_hour if original_hour is defined else 14 }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Ziua Săptămânii</label>
+                            <select name="day_of_week" class="form-select">
+                                <option value="Monday" {% if original_day == 'Monday' %}selected{% endif %}>Luni (Monday)</option>
+                                <option value="Tuesday" {% if original_day == 'Tuesday' %}selected{% endif %}>Marți (Tuesday)</option>
+                                <option value="Wednesday" {% if original_day == 'Wednesday' %}selected{% endif %}>Miercuri (Wednesday)</option>
+                                <option value="Thursday" {% if original_day == 'Thursday' %}selected{% endif %}>Joi (Thursday)</option>
+                                <option value="Friday" {% if original_day == 'Friday' %}selected{% endif %}>Vineri (Friday)</option>
+                                <option value="Saturday" {% if original_day == 'Saturday' %}selected{% endif %}>Sâmbătă (Saturday)</option>
+                                <option value="Sunday" {% if original_day == 'Sunday' %}selected{% endif %}>Duminică (Sunday)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn">🔮 Calculează Șansele</button>
+                    </form>
+
+                    {% if prediction %}
+                        <div class="result-box alert-{{ alert_type }}">
+                            {{ prediction }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <small>Dezvoltat cu Flask & Scikit-Learn</small>
+    </footer>
+
+</body>
+</html>
