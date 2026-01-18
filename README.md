@@ -46,13 +46,23 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Option 1: Run Jupyter Notebooks (Recommended)
+### Option 1: Run Web App (Recommended)
+1. Navigate to the app folder
+2. Type the following command into the terminal:
+   ```powershell
+   python app.py
+   ```
+3. Navigate to one of the web adresses shown into the terminal
+
+**In order to observe the accuracy of the model either navigate to the web application's dedicated page or use the following options.**
+   
+### Option 2: Run Jupyter Notebooks
 
 1. **Collect Data**: Run `data_collection.ipynb`
 2. **Preprocess**: Run `data_preprocessing.ipynb`
 3. **Train & Evaluate**: Run `reddit_virality_analysis.ipynb`
 
-### Option 2: Run Python Scripts
+### Option 3: Run Python Scripts
 
 ```powershell
 # 1. Scrape Reddit data
