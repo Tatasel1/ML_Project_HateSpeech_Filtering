@@ -49,10 +49,12 @@ pip install -r requirements.txt
 ### Option 1: Run Web App (Recommended)
 1. Navigate to the app folder
 2. Type the following command into the terminal:
+   
    ```powershell
    python app.py
    ```
-3. Navigate to one of the web adresses shown into the terminal
+   
+4. Navigate to one of the web adresses shown into the terminal
 
 **In order to observe the accuracy of the model either navigate to the web application's dedicated page or use the following options.**
    
