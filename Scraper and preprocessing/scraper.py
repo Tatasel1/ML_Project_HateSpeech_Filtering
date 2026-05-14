@@ -62,6 +62,7 @@ def scrape_askreddit(subreddits, num_pages = 20 , list_type = 'hot'):
                     'id': post_data['id'],
                     'subreddit': post_data['subreddit'],
                     'title': post_data['title'],
+                    'selftext': post_data.get('selftext', ''),
                     'score': post_data['score'],
                     'num_comments': post_data['num_comments'],
                     'created_utc': post_data['created_utc'],

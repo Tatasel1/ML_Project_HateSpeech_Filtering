@@ -1,9 +1,21 @@
 import numpy as np
 import pandas as pd
 import glob  # For getting all csvs with one path
+from textblob import TextBlob
 
+
+
+# Function so analyze text sentiment for titles and text bodies
+# Returns polarity and subjectivity scores as a pandas Series
+
+def analyze_text(text):
+    if pd.isna(text) or text.strip() == '':
+        return pd.Series([0.0, 0.0])  # Neutral sentiment for empty or NaN text
+    blob = TextBlob(text)
+    return pd.Series([blob.sentiment.polarity, blob.sentiment.subjectivity])
 
 def concat_csv_files():
+    
     files = glob.glob('CSV_combined/posts_*.csv')  # Adjust the path as needed
 
     df_list = []
@@ -17,7 +29,7 @@ def concat_csv_files():
         f"Combined {len(files)} files into 'combined_posts.csv' with {len(combined_df)} total records.")
 
     combined_df.drop_duplicates(subset='id', inplace=True)
-    combined_df.dropna(inplace=True)
+    combined_df.dropna(subset=['title'], inplace=True)
 
     # date conversion
 
@@ -36,6 +48,20 @@ def concat_csv_files():
     combined_df['day-of-week'] = combined_df['created_utc'].dt.day_name()
 
     combined_df['title_length'] = combined_df['title'].astype(str).apply(len)
+    
+    print("Analyzing text senriment for titles and text bodies")
+    
+    # Replace NaN in selftext with empty string
+    combined_df['selftext'] = combined_df.get('selftext', '').fillna('')
+    
+    combined_df[['title_polarity', 'title_subjectivity']] = combined_df['title'].apply(analyze_text)
+    combined_df[['body_polarity', 'body_subjectivity']] = combined_df['selftext'].apply(analyze_text)
+    combined_df['body_length'] = combined_df['selftext'].astype(str).apply(len)
+    
+    # Count uppercase words in title
+    combined_df['uppercase_word_count'] = combined_df['title'].astype(str).apply(
+        lambda x: sum(1 for word in x.split() if word.isupper() and len(word) > 1)
+    )
 
     # Score add field is_viral
     # if score > 50 then is_viral = 1 else 0
