@@ -56,6 +56,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="form-label">Post Body (Optional)</label>
+                            <textarea name="body" class="form-control" rows="4" placeholder="Ex: So I was exploring this abandoned building and...">{{ original_body|default('') }}</textarea>
+                            <div class="helper-text">Add the main text of the post to improve sentiment analysis.</div>
+                            </div>
+
+                        <div class="form-group">
                             <label class="form-label">Posting Hour (0-23)</label>
                             <input type="number" name="hour_of_day" class="form-control" min="0" max="23" value="{{ original_hour if original_hour is defined else 14 }}" required>
                         </div>

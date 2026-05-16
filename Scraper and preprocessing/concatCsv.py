@@ -3,8 +3,6 @@ import pandas as pd
 import glob  # For getting all csvs with one path
 from textblob import TextBlob
 
-
-
 # Function so analyze text sentiment for titles and text bodies
 # Returns polarity and subjectivity scores as a pandas Series
 
